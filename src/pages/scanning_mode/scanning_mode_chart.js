@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import * as d3selection from 'd3-selection' ;
+import GridData from './grid_data'
 
 
 export default class ScanningModeChart extends React.Component{
@@ -17,128 +18,14 @@ export default class ScanningModeChart extends React.Component{
     this.plotChart();
   }
 
-  generatePlotData(){
-    const {bits_value, grid_config} = this.props;
-    const {x_count, y_count} = grid_config;
-    const x_direction = bits_value[0]?'-':'+';
-    const y_direction = bits_value[1]?'+':'-';
-    const adjacent_direction = bits_value[2]?'y':'x';
-    const row_direction_change = bits_value[3];
-
-    let current_x = null;
-    let current_y = null;
-
-    let current_x_direction = x_direction;
-    let current_y_direction = y_direction;
-
-
-    function nextX(){
-      if(current_x_direction === '+'){
-        if(current_x === null){
-          current_x = 0;
-        } else {
-          current_x += 1;
-
-          // check direction
-          if(current_x === x_count){
-            if(adjacent_direction === 'x' && row_direction_change){
-              current_x_direction = '-';
-              current_x = x_count - 1;
-            } else {
-              current_x = 0;
-            }
-          }
-        }
-
-      }else{
-        if(current_x === null){
-          current_x = x_count - 1;
-        } else {
-          current_x -= 1;
-
-          // check direction
-          if(current_x === -1){
-            if(adjacent_direction === 'x' && row_direction_change){
-              current_x_direction = '+';
-              current_x = 0;
-            } else {
-              current_x = x_count - 1;
-            }
-          }
-
-        }
-      }
-      return current_x;
-    }
-
-    function nextY(){
-      if(current_y_direction === '-'){
-        if(current_y === null){
-          current_y = 0;
-        } else {
-          current_y += 1;
-
-          // check direction
-          if(current_y === y_count){
-            if(adjacent_direction === 'y' && row_direction_change){
-              current_y_direction = '+';
-              current_y = y_count - 1;
-            } else {
-              current_y = 0;
-            }
-          }
-        }
-
-      }else{
-        if(current_y === null){
-          current_y = y_count - 1;
-        } else {
-          current_y -= 1;
-
-          // check direction
-          if(current_y === -1){
-            if(adjacent_direction === 'y' && row_direction_change){
-              current_y_direction = '-';
-              current_y = 0;
-            } else {
-              current_y = y_count - 1;
-            }
-          }
-
-        }
-      }
-      return current_y;
-    }
-
-    let grid_data = [];
-    const total_count = x_count*y_count;
-    for(let index=0; index<total_count; index++){
-      if(adjacent_direction === 'x'){
-        nextX();
-        if(index % x_count === 0) {
-          nextY();
-        }
-      } else {
-        nextY();
-        if(index % y_count === 0) {
-          nextX();
-        }
-      }
-      grid_data.push({
-        'x': current_x,
-        'y': current_y,
-        'index': index
-      })
-    }
-    return grid_data;
-  }
-
   plotChart() {
     let svg = d3selection.select(this.refs.chart_svg);
     svg.selectAll("g").remove();
     svg.attr('height', '400px');
     svg.attr('width', '400px');
-    let grid_data = this.generatePlotData();
+    const {bits_value, grid_config} = this.props;
+    grid_data = new GridData(bits_value, grid_config);
+    let grid_data = grid_data.generate();
     console.log(grid_data);
 
     const grid_size = 40;
