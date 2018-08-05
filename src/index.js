@@ -1,17 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
+import GribWebToolApp from './app/grib_web_tool_app';
 
-class GribWebToolApp extends React.Component {
-  render(){
-    return (
-      <div>
-        <p>This is a GRIB Web Tool.</p>
-      </div>
-    )
-  }
-}
-
+require('./indes.scss');
 
 ReactDOM.render(
   <GribWebToolApp />,
