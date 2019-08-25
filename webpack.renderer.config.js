@@ -8,11 +8,20 @@ const dev_server = {
 const module_config = {
   rules: [
     {
-      test: /\.js$/,
-      exclude: /(node_modules)/,
-      use: [
-        'babel-loader'
-      ]
+      test: /\.m?js$/,
+      exclude: /(node_modules|bower_components)/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-env',
+            "@babel/preset-react"
+          ],
+          plugins: [
+            ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"],
+          ],
+        }
+      }
     },
     {
       test: /\.css$/,
@@ -40,7 +49,7 @@ const module_config = {
 
 module.exports = {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   devServer: dev_server,
   entry: [
     './src/renderer/index.js'
