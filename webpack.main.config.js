@@ -4,17 +4,46 @@ const webpack = require('webpack');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
 const GenerateJsonPlugin = require('generate-json-webpack-plugin');
 
-let nodeModulesPath = path.resolve(__dirname, 'node_modules');
-
 let entry= {
-  index: './src/main/index.js'
+  index: './src/main/index.ts'
 };
 
-let module_config= {
-  rules: []
+const module_config = {
+  rules: [
+    {
+      test: /\.(ts|js)x?$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+      }
+    },
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader', 'css-loader'
+      ]
+    },
+    {
+      test: /\.scss$/,
+      use: [
+        'style-loader', 'css-loader', 'sass-loader'
+      ]
+    },
+    {
+      test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      }]
+    }
+  ]
 };
 
-let resolve = {};
+let resolve = {
+  extensions: [".ts", ".tsx", ".js", ".json"]
+};
 
 const package_config = require("./package.json");
 
