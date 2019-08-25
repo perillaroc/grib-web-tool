@@ -16,22 +16,7 @@ function createMainWindow() {
     window.webContents.openDevTools();
   }
 
-  let main_url = url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  });
-
-  if (isDevelopment) {
-    window.loadURL(main_url);
-  }
-  else {
-    window.loadURL(url.format({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file',
-      slashes: true
-    }))
-  }
+  window.loadURL(`file://${__dirname}/index.html`);
 
   window.on('closed', () => {
     mainWindow = null;

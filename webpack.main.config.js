@@ -23,15 +23,18 @@ let app_package_config = {
   "productName": "grib-web-tool",
   "version": package_config.version,
   "description": package_config.description,
-  "main": "./index.js",
+  "main": "./index.bundle.js",
   "author": package_config.author,
   "license": package_config.license,
-  "dependencies": package_config.dependencies
+  "dependencies": package_config.dependencies,
+  "files": [
+    "./index.html",
+  ],
 };
 
 let plugins = [
   new CopyWebPackPlugin([
-    {'from': './src/main'},
+    {'from': './src/main/index.html'},
   ]),
   new GenerateJsonPlugin('package.json', app_package_config, null, 2)
 ];
@@ -51,5 +54,9 @@ module.exports = {
   externals: externals,
   plugins: plugins,
   resolve: resolve,
-  target: 'electron-main'
+  target: 'electron-main',
+  node: {
+    __dirname: false,
+    __filename: false
+  }
 };
