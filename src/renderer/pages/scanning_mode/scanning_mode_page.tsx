@@ -1,16 +1,20 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from 'react'
 import { Row, Col, Switch } from 'antd';
 
-import ScanningModeChart from './scanning_mode_chart'
+import {ScanningModeChart} from './scanning_mode_chart'
 
 
-export default class ScanningModePage extends React.Component{
+interface ScanningModePageState {
+  bits_value: Array<number>;
+}
+
+export class ScanningModePage extends React.Component<{}, ScanningModePageState>{
+  readonly state: ScanningModePageState = {
+    bits_value: [0, 0, 0, 0]
+  };
+
   constructor(props){
     super(props);
-    this.state = {
-      bits_value: [0, 0, 0, 0]
-    }
   }
 
   handleSwitchChange(index, checked){

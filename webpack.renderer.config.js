@@ -8,19 +8,10 @@ const dev_server = {
 const module_config = {
   rules: [
     {
-      test: /\.m?js$/,
-      exclude: /(node_modules|bower_components)/,
+      test: /\.(ts|js)x?$/,
+      exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
-        options: {
-          presets: [
-            '@babel/preset-env',
-            "@babel/preset-react"
-          ],
-          plugins: [
-            ["import", { "libraryName": "antd", "libraryDirectory": "lib"}, "ant"],
-          ],
-        }
       }
     },
     {
@@ -49,16 +40,23 @@ const module_config = {
 
 module.exports = {
   mode: 'development',
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
   devServer: dev_server,
+
   entry: [
-    './src/renderer/index.js'
+    './src/renderer/index.tsx'
   ],
+
   output: {
     publicPath: '/app/renderer',
     filename: '[name].entry.js',
     path: path.resolve(__dirname, './dist/app/renderer')
   },
+
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".json"]
+  },
+
   target: 'electron-renderer',
   module: module_config
 };

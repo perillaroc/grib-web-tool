@@ -1,7 +1,7 @@
-import React from 'react';
+import * as React from 'react';
 import styled from 'styled-components';
 
-import ScanningModePage from '../pages/scanning_mode/scanning_mode_page';
+import {ScanningModePage} from '../pages/scanning_mode/scanning_mode_page';
 
 import { Layout } from 'antd';
 
@@ -12,7 +12,7 @@ const AppTitle = styled.h1`
 `;
 
 
-export default class GribWebToolApp extends React.Component {
+export class GribWebToolApp extends React.Component {
   render(){
 
     return (

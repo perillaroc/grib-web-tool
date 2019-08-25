@@ -1,10 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types';
+import * as React from 'react'
 import * as d3selection from 'd3-selection' ;
-import GridData from './grid_data'
+import {GridConfig, GridData} from './grid_data'
 
 
-export default class ScanningModeChart extends React.Component{
+interface ScanningModeChartProps {
+  bits_value: Array<number>,
+  grid_config: GridConfig,
+}
+
+export class ScanningModeChart extends React.Component<ScanningModeChartProps, {}>{
   constructor(props){
     super(props);
   }
@@ -24,13 +28,13 @@ export default class ScanningModeChart extends React.Component{
     svg.attr('height', '400px');
     svg.attr('width', '400px');
     const {bits_value, grid_config} = this.props;
-    grid_data = new GridData(bits_value, grid_config);
-    let grid_data = grid_data.generate();
-    console.log(grid_data);
+    let grid_data = new GridData(bits_value, grid_config);
+    let grid_data_array = grid_data.generate();
+    console.log(grid_data_array);
 
     const grid_size = 40;
 
-    let grid_cell_data = svg.selectAll('.grid-cell').data(grid_data);
+    let grid_cell_data = svg.selectAll('.grid-cell').data(grid_data_array);
 
     let grid_cell_data_enter = grid_cell_data.enter();
     let grid_cell_data_enter_g = grid_cell_data_enter
@@ -72,11 +76,3 @@ export default class ScanningModeChart extends React.Component{
     )
   }
 }
-
-ScanningModeChart.propTypes = {
-  bits_value: PropTypes.array,
-  grid_config: PropTypes.shape({
-    x_count: PropTypes.number,
-    y_count: PropTypes.number
-  })
-};

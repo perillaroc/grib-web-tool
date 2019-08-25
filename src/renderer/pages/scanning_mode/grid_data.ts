@@ -1,5 +1,21 @@
-export default class GridData{
-  constructor(bits_value, grid_config){
+export interface GridConfig{
+  x_count: number;
+  y_count: number;
+}
+
+export class GridData{
+  x_count: number;
+  y_count: number;
+  x_direction: string;
+  y_direction: string;
+  adjacent_direction: string;
+  row_direction_change: number;
+  current_x: number;
+  current_y: number;
+  current_x_direction: string;
+  current_y_direction: string;
+
+  constructor(bits_value: Array<number>, grid_config: GridConfig){
     const {x_count, y_count} = grid_config;
     this.x_count = x_count;
     this.y_count = y_count;
