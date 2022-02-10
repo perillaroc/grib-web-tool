@@ -31,7 +31,7 @@
     "electron": "^7.2.4",
     "file-loader": "^4.2.0",
     "generate-json-webpack-plugin": "^0.3.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
