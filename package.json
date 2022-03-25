@@ -28,7 +28,7 @@
     "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "d3-selection": "^1.4.0",
-    "electron": "^7.2.4",
+    "electron": "^13.6.6",
     "file-loader": "^4.2.0",
     "generate-json-webpack-plugin": "^0.3.1",
     "node-sass": "^4.13.1",
